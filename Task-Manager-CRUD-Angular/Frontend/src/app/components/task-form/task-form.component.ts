@@ -65,6 +65,7 @@ export class TaskFormComponent implements OnInit {
         this.taskServiceService.setLoading(false);
         this.errorMessage = undefined;
         this.formEvent.emit(JSON.stringify({"formData":newTaskData}));
+        this.taskForm.reset();
         this.closeForm();
       }, error => {
         this.taskServiceService.setLoading(false);
