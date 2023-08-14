@@ -11,13 +11,17 @@ import { TaskServiceService } from 'app/services/task-service.service';
 })
 export class TaskFormComponent implements OnInit {
   defaultUser:String = "Ashish Patel";
-  taskForm: FormGroup;
+  taskForm: FormGroup ;
   validationMessage:any = {};
   errorMessage:any;
   
 
   constructor(  private fb: FormBuilder , private taskServiceService: TaskServiceService) {
-    this.taskForm = this.fb.group({
+    this.taskForm = this.defineForm();
+  }
+
+  defineForm (){
+    return this.fb.group({
       taskName: ['', Validators.required],
       description: ['', [Validators.required]],
       startDate: [''],
@@ -66,6 +70,7 @@ export class TaskFormComponent implements OnInit {
         this.errorMessage = undefined;
         this.formEvent.emit(JSON.stringify({"formData":newTaskData}));
         this.taskForm.reset();
+        this.taskForm = this.defineForm();
         this.closeForm();
       }, error => {
         this.taskServiceService.setLoading(false);
